@@ -1,0 +1,6 @@
+[parity]
+chain = "/etc/parity/chain.json"
+
+[rpc]
+interface = "0.0.0.0"
+apis = ["all"]

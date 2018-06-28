@@ -1,0 +1,62 @@
+version: '3.6'
+
+services:
+  node0:
+    image: "${IMG}"
+    command:
+      --config /etc/parity/daemon.toml
+    ports:
+      - "8560:8545"
+    volumes:
+      - ./parity/config_init/node0:/etc/parity/:ro
+      - ./parity/data/node0:/root/.local/share/io.parity.ethereum/
+    networks:
+      - app-net
+
+  node1:
+    image: "${IMG}"
+    command:
+      --config /etc/parity/daemon.toml
+    ports:
+      - "8561:8545"
+    volumes:
+      - ./parity/config_init/node1:/etc/parity/:ro
+      - ./parity/data/node1:/root/.local/share/io.parity.ethereum/
+    networks:
+      - app-net
+
+  node2:
+    image: "${IMG}"
+    command:
+    command:
+      --config /etc/parity/daemon.toml
+    ports:
+      - "8562:8545"
+    volumes:
+      - ./parity/config_init/node2:/etc/parity/:ro
+      - ./parity/data/node2:/root/.local/share/io.parity.ethereum/
+    networks:
+      - app-net
+
+  monitor:
+    image: buythewhale/ethstats_monitor
+    volumes:
+      - ./monitor/app.json:/home/ethnetintel/eth-net-intelligence-api/app.json:ro
+    networks:
+      - app-net
+
+  dashboard:
+    image: buythewhale/ethstats
+    volumes:
+      - ./dashboard/ws_secret.json:/eth-netstats/ws_secret.json:ro
+    ports:
+      - 3001:3000
+    networks:
+      - app-net
+
+networks:
+  app-net:
+    driver: overlay
+    ipam:
+      config:
+      - subnet: 10.250.0.0/16

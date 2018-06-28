@@ -1,0 +1,7 @@
+
+[account]
+password = ["/etc/parity/password.file"]
+
+[mining]
+reseal_on_txs = "none"
+usd_per_tx = "0"
